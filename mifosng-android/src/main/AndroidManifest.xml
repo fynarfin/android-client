@@ -155,6 +155,10 @@
             android:name=".passcode.PassCodeActivity"
             android:label="@string/pass_code"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".online.voucher.VoucherRedemptionActivity"
+            android:label="@string/voucher_redemption"
+            android:screenOrientation="portrait" />
 
         <activity android:name=".AboutActivity"
             android:label="@string/about"
