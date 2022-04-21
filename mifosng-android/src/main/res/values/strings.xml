@@ -902,6 +902,7 @@
     <string name="running_balance">Running Balance</string>
     <string name="transaction_type">Transaction Type</string>
     <string name="date">Date</string>
+    <string name="hint_mobile_number">Enter Mobile Number</string>
     <string name="transaction_id">Transaction Id</string>
 
 
@@ -915,4 +916,8 @@
     <string name="instance_url">Instance Url</string>
 
     <string name="voucher_redemption">Voucher Redemption</string>
+    <string name="enter">Enter</string>
+    <string name="price">Price</string>
+    <string name="quantity">Quantity</string>
+    <string name="desc">Description</string>
 </resources>

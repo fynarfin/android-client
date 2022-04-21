@@ -25,6 +25,15 @@
     <style name="TraslucentActionBarTheme" parent="MaterialAppTheme">
     </style>
 
+    <style name="PhoneNumberInputStyle">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:hint">@string/hint_mobile_number</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:inputType">number</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textSize">@dimen/text_size</item>
+    </style>
+
     <style name="Widget.ActionMode" parent="Widget.AppCompat.ActionMode">
         <item name="background">@color/primary_dark</item>
         <item name="titleTextStyle">@style/AppTheme.Text</item>
