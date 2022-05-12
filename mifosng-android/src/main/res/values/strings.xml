@@ -920,4 +920,31 @@
     <string name="price">Price</string>
     <string name="quantity">Quantity</string>
     <string name="desc">Description</string>
+    <string name="voucherID">Enter the ID</string>
+    <string name="biometric">Capture Biometric</string>
+    <string name="voucher_id">Select ID</string>
+    <string name="select_fingerprint">Select the Finger</string>
+    <string name="error_finger_selection">Please Select Finger Position!</string>
+
+
+    <string-array name="select_id">
+        <item>SKU ID</item>
+        <item>Source ID</item>
+        <item>Product ID</item>
+    </string-array>
+
+    <string-array name="Finger">
+        <item>UNKNOWN</item>
+        <item>LEFT_INDEX</item>
+        <item>LEFT_MIDDLE</item>
+        <item>LEFT_RING</item>
+        <item>LEFT_LITTLE</item>
+        <item>LEFT_THUMB</item>
+        <item>RIGHT_INDEX</item>
+        <item>RIGHT_MIDDLE</item>
+        <item>RIGHT_RING</item>
+        <item>RIGHT_LITTLE</item>
+        <item>RIGHT_THUMB</item>
+    </string-array>
+
 </resources>
