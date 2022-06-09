@@ -6,15 +6,36 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/topAppBar"
+            style="@style/Toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:navigationIcon="@drawable/ic_dp_placeholder"
+            app:title="@string/voucher_redemption"
+            app:titleTextColor="@color/white"
+
+            />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/layout_mobile_no"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/default_margin"
+        android:digits="0123456789+"
         android:hint="@string/hint_mobile_number"
+        android:inputType="phone"
         android:visibility="visible"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/app_bar_layout">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_mobile_no"
@@ -23,13 +44,98 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_id_details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/app_bar_layout">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/beneficiary_id"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_margin"
+            android:hint="@string/beneficiaryID"
+            android:visibility="visible"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_beneficiary_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/voucher_id"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_margin"
+            android:hint="@string/voucherID"
+            android:visibility="visible"
+            app:layout_constraintTop_toBottomOf="@id/beneficiary_id">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_voucher_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/source_id"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_margin"
+            android:hint="@string/sourceID"
+            android:visibility="visible"
+            app:layout_constraintTop_toBottomOf="@id/voucher_id">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_source_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Spinner
+            android:id="@+id/input_id_spinner"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="@dimen/login_margin_top"
+            app:layout_constraintTop_toBottomOf="@id/source_id" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/sku_id"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_margin"
+            android:hint="@string/skuID"
+            android:visibility="visible"
+            app:layout_constraintTop_toBottomOf="@id/input_id_spinner">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_sku_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_voucher_details"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/app_bar_layout">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/layout_price"
@@ -82,8 +188,26 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <Spinner
+            android:id="@+id/input_fingerprint"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="@dimen/login_margin_top"
+            app:layout_constraintTop_toBottomOf="@id/layout_desc" />
 
+        <Button
+            android:id="@+id/fingerprint_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:gravity="center_horizontal|center"
+            android:text="@string/biometric"
+            android:textStyle="normal|bold"
+            android:visibility="visible"
+            app:layout_constraintTop_toBottomOf="@id/input_fingerprint" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
         android:id="@+id/send_button"
@@ -94,51 +218,5 @@
         android:text="@string/enter"
         android:textStyle="normal|bold"
         app:layout_constraintBottom_toBottomOf="parent" />
-
-    <Spinner
-        android:id="@+id/input_id_spinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_margin="@dimen/default_margin"
-        app:layout_constraintTop_toBottomOf="@id/layout_mobile_no" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/layout_id"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/default_margin"
-        android:hint="@string/voucherID"
-        android:visibility="visible"
-        app:layout_constraintTop_toBottomOf="@id/input_id_spinner">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_id"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <Spinner
-        android:id="@+id/input_fingerprint"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_margin="@dimen/default_margin"
-        app:layout_constraintTop_toBottomOf="@id/layout_id" />
-
-    <Button
-        android:id="@+id/fingerprint_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:gravity="center_horizontal|center"
-        android:text="@string/biometric"
-        android:textStyle="normal|bold"
-        android:visibility="visible"
-        app:layout_constraintTop_toBottomOf="@id/input_fingerprint" />
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

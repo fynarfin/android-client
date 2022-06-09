@@ -1,24 +1,27 @@
 package com.mifos.mifosxdroid.online.voucher
 
 import android.app.Activity
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Spinner
-import android.widget.Toast
+import android.view.Window
+import android.widget.*
 import androidx.annotation.StringRes
 import com.mifos.api.model.biometric.Opts
 import com.mifos.api.model.biometric.PidData
 import com.mifos.api.model.biometric.PidOptions
 import com.mifos.mifosxdroid.R
 import com.mifos.mifosxdroid.core.MifosBaseActivity
+import com.mifos.utils.PrefManager
 import com.mifos.utils.Utils
 import kotlinx.android.synthetic.main.activity_voucher_redemption.*
+import kotlinx.android.synthetic.main.dialog_result.*
 import org.simpleframework.xml.core.Persister
 import java.io.StringWriter
 import java.util.*
@@ -34,7 +37,6 @@ class VoucherRedemptionActivity : MifosBaseActivity(), VoucherRedemptionMVPView 
     //val spinner: Spinner = findViewById(R.id.input_id_spinner)
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_voucher_redemption)
@@ -46,11 +48,21 @@ class VoucherRedemptionActivity : MifosBaseActivity(), VoucherRedemptionMVPView 
     private fun initView() {
         // Write a code for UI related task when this screen will start
         send_button.setOnClickListener {
-            layout_mobile_no.visibility = View.GONE
-            layout_voucher_details.visibility = View.VISIBLE
-            buttonState = 2
+            if (buttonState == 1) {
+                layout_mobile_no.visibility = View.GONE
+                layout_id_details.visibility = View.VISIBLE
+                et_beneficiary_id.setText("41267855")
+                buttonState = 2
+            } else if (buttonState == 2) {
+//                et_beneficiary_id.setText(PrefManager.getUserId())
+                layout_id_details.visibility = View.GONE
+                layout_voucher_details.visibility = View.VISIBLE
+                buttonState = 3
+            } else if (buttonState == 3) {
+                finish()
+            }
         }
-        val id = resources.getStringArray(R.array.Finger)
+        val id = resources.getStringArray(R.array.select_id)
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, id)
         input_id_spinner.adapter = adapter
 
@@ -61,7 +73,7 @@ class VoucherRedemptionActivity : MifosBaseActivity(), VoucherRedemptionMVPView 
                 position: Int,
                 id: Long
             ) {
-          //      fingerPosition = fingers[position]
+                //      fingerPosition = fingers[position]
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {
@@ -80,7 +92,7 @@ class VoucherRedemptionActivity : MifosBaseActivity(), VoucherRedemptionMVPView 
                 position: Int,
                 id: Long
             ) {
-                     fingerPosition = fingers[position]
+                fingerPosition = fingers[position]
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {
@@ -112,6 +124,30 @@ class VoucherRedemptionActivity : MifosBaseActivity(), VoucherRedemptionMVPView 
 
     }
 
+    private fun showAlertDialog(result: Boolean) {
+
+        val dialog = Dialog(this)
+        dialog.window?.requestFeature(Window.FEATURE_NO_TITLE)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        val view: View = layoutInflater.inflate(R.layout.dialog_result, null)
+        val btnOk: Button = view.findViewById(R.id.btn_ok)
+        val desc: TextView = view.findViewById(R.id.tv_description)
+        val success: ImageView = view.findViewById(R.id.iv_success)
+        dialog.setCancelable(false)
+        dialog.setContentView(view)
+        btnOk.setOnClickListener {
+            finish()
+        }
+        if(result) {
+            desc.text = getString(R.string.voucher_successful)
+            success.setImageResource(R.drawable.check_circle)
+        }
+        else {
+            desc.text = getString(R.string.voucher_failure)
+            success.setImageResource(R.drawable.close_circle)
+        }
+        dialog.show()
+    }
 
 
     private fun startBiomatricProcess() {
@@ -143,7 +179,9 @@ class VoucherRedemptionActivity : MifosBaseActivity(), VoucherRedemptionMVPView 
                                 } else {
                                     TODO("VERSION.SDK_INT < O")
                                 }
-                        }
+                            showAlertDialog(true)
+                        } else
+                            showAlertDialog(false)
                     }
                 }
             } catch (e: Exception) {
@@ -155,7 +193,7 @@ class VoucherRedemptionActivity : MifosBaseActivity(), VoucherRedemptionMVPView 
     private fun getPIDOptions(): String? {
         try {
             if (fingerPosition.equals("Select")) {
-                showErrorToast( R.string.error_finger_selection)
+                showErrorToast(R.string.error_finger_selection)
             } else {
                 val opts = Opts()
                 opts.fCount = "1"
@@ -182,8 +220,10 @@ class VoucherRedemptionActivity : MifosBaseActivity(), VoucherRedemptionMVPView 
         }
         return null
     }
-    fun showErrorToast( @StringRes stringResource: Int) {
-        Toast.makeText(this, this.getString(stringResource),
+
+    fun showErrorToast(@StringRes stringResource: Int) {
+        Toast.makeText(
+            this, this.getString(stringResource),
             Toast.LENGTH_LONG
         ).show()
     }

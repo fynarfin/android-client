@@ -837,7 +837,7 @@
     <string name="ui">UI</string>
     <string name="dark_mode_def_value">MODE_NIGHT_FOLLOW_SYSTEM</string>
 
-    <string-array name="dark_mode_entries"  translatable="false">
+    <string-array name="dark_mode_entries" translatable="false">
         <item>Light</item>
         <item>Dark</item>
         <item>System Default</item>
@@ -860,7 +860,7 @@
     <string name="about_license">License</string>
     <string name="about_license_sub">Check Mozilla Public License 2.0</string>
 
-    <string-array name="dark_mode_values"  translatable="false">
+    <string-array name="dark_mode_values" translatable="false">
         <item>light</item>
         <item>dark</item>
         <item>default</item>
@@ -920,16 +920,23 @@
     <string name="price">Price</string>
     <string name="quantity">Quantity</string>
     <string name="desc">Description</string>
-    <string name="voucherID">Enter the ID</string>
+    <string name="voucherID">Enter the Voucher ID</string>
     <string name="biometric">Capture Biometric</string>
     <string name="voucher_id">Select ID</string>
     <string name="select_fingerprint">Select the Finger</string>
     <string name="error_finger_selection">Please Select Finger Position!</string>
+    <string name="sourceID">Enter the Source ID</string>
+    <string name="skuID">Enter the SKU ID</string>
+    <string name="beneficiaryID">Enter the Beneficiary ID</string>
+    <string name="attention">Attention!</string>
+    <string name="go_back">Back</string>
+    <string name="voucher_successful">Voucher Redemption Successful!</string>
+    <string name="voucher_failure">Voucher Redemption Failed!</string>
 
 
     <string-array name="select_id">
+        <item>Select ID</item>
         <item>SKU ID</item>
-        <item>Source ID</item>
         <item>Product ID</item>
     </string-array>
 
