@@ -25,6 +25,7 @@ import com.mifos.api.services.SavingsAccountService;
 import com.mifos.api.services.SearchService;
 import com.mifos.api.services.StaffService;
 import com.mifos.api.services.SurveyService;
+import com.mifos.api.services.VoucherRedemptionService;
 import com.mifos.utils.JsonDateSerializer;
 import com.mifos.utils.PrefManager;
 
@@ -60,6 +61,7 @@ public class BaseApiManager {
     private static NoteService noteService;
     private static CollectionSheetService collectionSheetService;
     private static CheckerInboxService checkerInboxService;
+    private static VoucherRedemptionService voucherRedemptionService;
 
     public BaseApiManager() {
         createService();
@@ -84,6 +86,7 @@ public class BaseApiManager {
         noteService = createApi(NoteService.class);
         collectionSheetService = createApi(CollectionSheetService.class);
         checkerInboxService = createApi(CheckerInboxService.class);
+        voucherRedemptionService = createApi(VoucherRedemptionService.class);
     }
 
     private static <T> T createApi(Class<T> clazz) {
@@ -176,4 +179,6 @@ public class BaseApiManager {
     public CheckerInboxService getCheckerInboxApi() {
         return checkerInboxService;
     }
+
+    public static VoucherRedemptionService getVoucherRedemptionService() { return voucherRedemptionService; }
 }

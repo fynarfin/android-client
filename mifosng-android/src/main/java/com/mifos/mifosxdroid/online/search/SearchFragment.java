@@ -22,6 +22,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -37,6 +38,7 @@ import com.mifos.mifosxdroid.online.GroupsActivity;
 import com.mifos.mifosxdroid.online.createnewcenter.CreateNewCenterFragment;
 import com.mifos.mifosxdroid.online.createnewclient.CreateNewClientFragment;
 import com.mifos.mifosxdroid.online.createnewgroup.CreateNewGroupFragment;
+import com.mifos.mifosxdroid.online.voucher.VoucherRedemptionActivity;
 import com.mifos.objects.SearchedEntity;
 import com.mifos.utils.Constants;
 import com.mifos.utils.EspressoIdlingResource;
@@ -72,6 +74,9 @@ public class SearchFragment extends MifosBaseFragment implements SearchMvpView,
 
     @BindView(R.id.cb_exact_match)
     CheckBox cb_exactMatch;
+
+    @BindView(R.id.tv_voucher_redemption)
+    TextView tvVoucherRedemption;
 
     @BindView(R.id.fab_create)
     FloatingActionButton fabCreate;
@@ -147,6 +152,13 @@ public class SearchFragment extends MifosBaseFragment implements SearchMvpView,
                 onClickSearch();
             }
         });
+        tvVoucherRedemption.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), VoucherRedemptionActivity.class);
+                startActivity(intent);
+            }
+        });;
 
         showGuide();
     }

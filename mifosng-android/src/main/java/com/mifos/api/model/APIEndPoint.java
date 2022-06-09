@@ -38,4 +38,5 @@ public class APIEndPoint {
     public static final String DISBURSE = "disburse";
     public static final String NOTES = "notes";
     public static final String MAKERCHECKER = "makercheckers";
+    public static final String VOUCHER = "vouchers";
 }
