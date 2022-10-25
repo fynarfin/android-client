@@ -10,10 +10,9 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:cardUseCompatPadding="true">
+            android:layout_height="match_parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -31,7 +30,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
-                        android:layout_marginLeft="16dp"
                         android:layout_marginTop="16dp"
                         android:textSize="24sp"
                         android:textStyle="bold" />
@@ -115,11 +113,10 @@
                     android:elevation="2dp"
                     android:src="@drawable/ic_dp_placeholder" />
             </LinearLayout>
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
         <Button
             android:id="@+id/btn_add_payment"
-            style="@style/Button.Base"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -138,17 +135,17 @@
             android:layout_height="wrap_content"
             android:scrollbars="vertical">
 
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:cardUseCompatPadding="true">
+                android:layout_height="wrap_content"
+                app:contentPadding="@dimen/Mifos.DesignSystem.Spacing.CardInnerPadding">
 
                 <TableLayout
                     android:id="@+id/table_additional_details"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:visibility="gone">
+                    android:visibility="visible">
 
                     <TableRow>
 
@@ -284,10 +281,9 @@
                                 android:text="@string/save"
                                 android:textColor="@color/primary" />
                         </LinearLayout>
-
                     </TableRow>
                 </TableLayout>
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
         </ScrollView>
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>
