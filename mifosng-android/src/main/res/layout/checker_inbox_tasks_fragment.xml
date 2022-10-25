@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-    android:id="@+id/swipe_refresh_layout"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/swipe_refresh_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <LinearLayout
         android:id="@+id/ll_checker_inbox_tasks"
         android:layout_width="match_parent"
@@ -20,6 +20,7 @@
             android:clickable="true"
             android:minHeight="@dimen/dimension_72_dp"
             android:paddingLeft="@dimen/layout_padding_24dp"
+            android:focusable="true"
             android:paddingRight="@dimen/layout_padding_24dp">
 
             <ImageView
@@ -45,13 +46,15 @@
 
             <TextView
                 android:id="@+id/badge_checker_inbox"
-                style="@style/badge_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Mifos.DesignSystem.TextStyle.BodyRed"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:text="0" />
         </RelativeLayout>
 
-        <View style="@style/divider_style" />
+        <View style="@style/Mifos.DesignSystem.Components.HorizontalSpacer" />
 
         <RelativeLayout
             android:id="@+id/rl_client_approval"
@@ -85,14 +88,16 @@
                 android:textStyle="bold" />
 
             <TextView
+                style="@style/Mifos.DesignSystem.TextStyle.BodyRed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:id="@+id/badge_client_approval"
-                style="@style/badge_style"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:text="0" />
         </RelativeLayout>
 
-        <View style="@style/divider_style" />
+        <View style="@style/Mifos.DesignSystem.Components.HorizontalSpacer" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -126,13 +131,15 @@
 
             <TextView
                 android:id="@+id/badge_loan_approval"
-                style="@style/badge_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Mifos.DesignSystem.TextStyle.BodyRed"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:text="0" />
         </RelativeLayout>
 
-        <View style="@style/divider_style" />
+        <View style="@style/Mifos.DesignSystem.Components.HorizontalSpacer" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -166,13 +173,15 @@
 
             <TextView
                 android:id="@+id/badge_loan_disbursal"
-                style="@style/badge_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Mifos.DesignSystem.TextStyle.BodyRed"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:text="0" />
         </RelativeLayout>
 
-        <View style="@style/divider_style" />
+        <View style="@style/Mifos.DesignSystem.Components.HorizontalSpacer" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -206,13 +215,15 @@
 
             <TextView
                 android:id="@+id/badge_reschedule_loan"
-                style="@style/badge_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Mifos.DesignSystem.TextStyle.BodyRed"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:text="0" />
+                android:text="13" />
         </RelativeLayout>
 
-        <View style="@style/divider_style" />
+        <View style="@style/Mifos.DesignSystem.Components.HorizontalSpacer" />
 
     </LinearLayout>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

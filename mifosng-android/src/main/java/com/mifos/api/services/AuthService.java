@@ -5,6 +5,7 @@
 package com.mifos.api.services;
 
 import com.mifos.api.model.APIEndPoint;
+import com.mifos.api.model.LoginUser;
 import com.mifos.objects.user.User;
 import com.mifos.services.data.LoginPayload;
 
@@ -19,6 +20,8 @@ import rx.Observable;
 public interface AuthService {
 
     @POST(APIEndPoint.AUTHENTICATION)
+
     Observable<User> authenticate(@Body LoginPayload loginPayload);
+
 
 }

@@ -5,10 +5,9 @@
 
 package com.mifos.mifosxdroid.online.search;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,16 +20,19 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mifos.mifosxdroid.R;
 import com.mifos.mifosxdroid.adapters.SearchAdapter;
 import com.mifos.mifosxdroid.core.MifosBaseActivity;
 import com.mifos.mifosxdroid.core.MifosBaseFragment;
-import com.mifos.mifosxdroid.core.RecyclerItemClickListener;
 import com.mifos.mifosxdroid.core.util.Toaster;
 import com.mifos.mifosxdroid.online.CentersActivity;
 import com.mifos.mifosxdroid.online.ClientActivity;
@@ -45,9 +47,12 @@ import com.mifos.utils.EspressoIdlingResource;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringJoiner;
 
 import javax.inject.Inject;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindArray;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -55,8 +60,7 @@ import butterknife.OnClick;
 import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence;
 import uk.co.deanwild.materialshowcaseview.ShowcaseConfig;
 
-public class SearchFragment extends MifosBaseFragment implements SearchMvpView,
-        RecyclerItemClickListener.OnItemClickListener, AdapterView.OnItemSelectedListener {
+public class SearchFragment extends MifosBaseFragment implements SearchMvpView {
 
     private static final String LOG_TAG = SearchFragment.class.getSimpleName();
 
@@ -66,8 +70,8 @@ public class SearchFragment extends MifosBaseFragment implements SearchMvpView,
     @BindView(R.id.et_search)
     EditText et_search;
 
-    @BindView(R.id.sp_search)
-    Spinner sp_search;
+    @BindView(R.id.filterSelectionButton)
+    Button filterSelectionButton;
 
     @BindView(R.id.rv_search)
     RecyclerView rv_search;
@@ -93,7 +97,6 @@ public class SearchFragment extends MifosBaseFragment implements SearchMvpView,
     @BindArray(R.array.search_options_values)
     String[] searchOptionsValues;
 
-    @Inject
     SearchAdapter searchAdapter;
 
     @Inject
@@ -107,7 +110,6 @@ public class SearchFragment extends MifosBaseFragment implements SearchMvpView,
     private String resources;
     private Boolean isFabOpen = false;
     private Animation fab_open, fab_close, rotate_forward, rotate_backward;
-    private LinearLayoutManager layoutManager;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -130,20 +132,69 @@ public class SearchFragment extends MifosBaseFragment implements SearchMvpView,
         showUserInterface();
         return rootView;
     }
+    int checkedFilter = 0;
+    private void showFilterDialog(){
+        MaterialAlertDialogBuilder dialogBuilder = new MaterialAlertDialogBuilder(requireContext());
+        dialogBuilder.setSingleChoiceItems(
+            R.array.search_options,
+            checkedFilter,
+            (dialog, index) -> {
+                checkedFilter = index;
+                resources = checkedFilter == 0 ? String.join(",", searchOptionsValues) : searchOptionsValues[checkedFilter-1];
+                autoTriggerSearch = true;
+                onClickSearch();
+                filterSelectionButton.setText(getResources().getStringArray(R.array.search_options)[index]);
+                dialog.dismiss();
+            }
+        );
+        dialogBuilder.show();
+    }
 
     @Override
     public void showUserInterface() {
         searchOptionsAdapter = ArrayAdapter.createFromResource(getActivity(),
                 R.array.search_options, android.R.layout.simple_spinner_item);
         searchOptionsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        sp_search.setAdapter(searchOptionsAdapter);
-        sp_search.setOnItemSelectedListener(this);
+        filterSelectionButton.setOnClickListener(v -> showFilterDialog());
+        filterSelectionButton.setText(getResources().getStringArray(R.array.search_options)[0]);
         et_search.requestFocus();
-        layoutManager = new LinearLayoutManager(getActivity());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         rv_search.setLayoutManager(layoutManager);
-        rv_search.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), this));
         rv_search.setHasFixedSize(true);
+        searchAdapter = new SearchAdapter(searchedEntity -> {
+                Intent activity = null;
+                switch (searchedEntity.getEntityType()) {
+                    case Constants.SEARCH_ENTITY_LOAN:
+                        activity = new Intent(getActivity(), ClientActivity.class);
+                        activity.putExtra(Constants.LOAN_ACCOUNT_NUMBER,
+                                searchedEntity.getEntityId());
+                        break;
+                    case Constants.SEARCH_ENTITY_CLIENT:
+                        activity = new Intent(getActivity(), ClientActivity.class);
+                        activity.putExtra(Constants.CLIENT_ID,
+                                searchedEntity.getEntityId());
+                        break;
+                    case Constants.SEARCH_ENTITY_GROUP:
+                        activity = new Intent(getActivity(), GroupsActivity.class);
+                        activity.putExtra(Constants.GROUP_ID,
+                                searchedEntity.getEntityId());
+                        break;
+                    case Constants.SEARCH_ENTITY_SAVING:
+                        activity = new Intent(getActivity(), ClientActivity.class);
+                        activity.putExtra(Constants.SAVINGS_ACCOUNT_NUMBER,
+                                searchedEntity.getEntityId());
+                        break;
+                    case Constants.SEARCH_ENTITY_CENTER:
+                        activity = new Intent(getActivity(), CentersActivity.class);
+                        activity.putExtra(Constants.CENTER_ID,
+                                searchedEntity.getEntityId());
+                        break;
+                }
+                startActivity(activity);
+                return null;
+            }
+        );
         rv_search.setAdapter(searchAdapter);
 
         cb_exactMatch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -184,7 +235,7 @@ public class SearchFragment extends MifosBaseFragment implements SearchMvpView,
 
         sequence.addSequenceItem(et_search,
                 et_search_intro, getString(R.string.got_it));
-        sequence.addSequenceItem(sp_search,
+        sequence.addSequenceItem(filterSelectionButton,
                 sp_search_intro, getString(R.string.next));
         sequence.addSequenceItem(cb_exactMatch,
                 cb_exactMatch_intro, getString(R.string.next));
@@ -291,63 +342,6 @@ public class SearchFragment extends MifosBaseFragment implements SearchMvpView,
         //Fragment getting detached, keyboard if open must be hidden
         hideKeyboard(et_search);
         super.onPause();
-    }
-
-    @Override
-    public void onItemClick(View childView, int position) {
-        Intent activity = null;
-        switch (searchedEntities.get(position).getEntityType()) {
-            case Constants.SEARCH_ENTITY_LOAN:
-                activity = new Intent(getActivity(), ClientActivity.class);
-                activity.putExtra(Constants.LOAN_ACCOUNT_NUMBER,
-                        searchedEntities.get(position).getEntityId());
-                break;
-            case Constants.SEARCH_ENTITY_CLIENT:
-                activity = new Intent(getActivity(), ClientActivity.class);
-                activity.putExtra(Constants.CLIENT_ID,
-                        searchedEntities.get(position).getEntityId());
-                break;
-            case Constants.SEARCH_ENTITY_GROUP:
-                activity = new Intent(getActivity(), GroupsActivity.class);
-                activity.putExtra(Constants.GROUP_ID,
-                        searchedEntities.get(position).getEntityId());
-                break;
-            case Constants.SEARCH_ENTITY_SAVING:
-                activity = new Intent(getActivity(), ClientActivity.class);
-                activity.putExtra(Constants.SAVINGS_ACCOUNT_NUMBER,
-                        searchedEntities.get(position).getEntityId());
-                break;
-            case Constants.SEARCH_ENTITY_CENTER:
-                activity = new Intent(getActivity(), CentersActivity.class);
-                activity.putExtra(Constants.CENTER_ID,
-                        searchedEntities.get(position).getEntityId());
-                break;
-        }
-        startActivity(activity);
-    }
-
-    @Override
-    public void onItemLongPress(View childView, int position) {
-
-    }
-
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        if (parent.getId() == R.id.sp_search) {
-            if (position == 0) {
-                resources = searchOptionsValues[0] + "," + searchOptionsValues[1] + "," +
-                        searchOptionsValues[2] + "," + searchOptionsValues[3];
-            } else {
-                resources = searchOptionsValues[position - 1];
-            }
-            autoTriggerSearch = true;
-            onClickSearch();
-        }
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
     }
 
     /**

@@ -6,9 +6,9 @@ task clean(type: Delete) {
 // Define versions in a single place
 ext {
     // Sdk and tools
-    minSdkVersion = 15
-    targetSdkVersion = 28
-    compileSdkVersion = 28
+    minSdkVersion = 22
+    targetSdkVersion = 33
+    compileSdkVersion = 33
     buildToolsVersion = '28.0.3'
 
     // App dependencies
@@ -24,7 +24,7 @@ ext {
     okHttp3Version = '3.5.0'
     flipTableVersion = '1.0.1'
     butterKnifeVersion = '8.0.1'
-    mifosPasscodeVersion = '0.3.0'
+    mifosPasscodeVersion = '1.0.0'
     preference = '1.1.0'
 
 }

@@ -5,91 +5,89 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/LinearLayout.Base"
-    android:orientation="vertical"
-    android:padding="10dp">
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_marginHorizontal="@dimen/Mifos.DesignSystem.Spacing.screenHorizontalMargin">
 
         <TextView
-            android:id="@+id/tv_search"
-            android:paddingRight="4dp"
-            style="@style/TextView.Search"
-            android:paddingEnd="4dp" />
+            style="@style/Mifos.DesignSystem.TextStyle.Heading"
+            android:text="@string/search"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"/>
 
-        <Spinner
-            android:id="@+id/sp_search"
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/filterSelectionButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="50dp"
-            android:gravity="end"
-            android:layout_marginTop="10dp"/>
+            android:layout_gravity="end"
+            app:iconGravity="textEnd"
+            app:icon="@drawable/ic_baseline_arrow_drop_down_24"
+            style="@style/Mifos.DesignSystem.Components.Button.Text"
+            tools:text="All" />
+
     </LinearLayout>
-    <androidx.cardview.widget.CardView
+
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="4dp"
-        app:cardElevation="4dp">
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="10dp">
-            <ImageView
-                android:id="@+id/iv_search_icon"
-                android:layout_width="@dimen/dimension_32_dp"
-                android:layout_height="@dimen/dimension_32_dp"
-                android:layout_centerVertical="true"
-                android:scaleType="centerInside"
-                app:srcCompat="@drawable/ic_search_black_24dp" />
-
-            <EditText
-                android:id="@+id/et_search"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="4dp"
-                android:layout_toLeftOf="@id/iv_filter_search_icon"
-                android:layout_toRightOf="@id/iv_search_icon"
-                android:background="@android:color/transparent"
-                android:hint="@string/search_hint"
-                android:singleLine="true"
-                android:textSize="15sp"
-                tools:ignore="NotSibling"
-                android:layout_marginEnd="4dp"
-                android:layout_toEndOf="@id/iv_search_icon"
-                android:layout_toStartOf="@id/iv_filter_search_icon"
-                android:layout_marginStart="8dp" />
-
-        </RelativeLayout>
-    </androidx.cardview.widget.CardView>
+        android:hint="@string/search_hint"
+        app:startIconDrawable="@drawable/ic_search_black_24dp"
+        android:layout_marginHorizontal="@dimen/Mifos.DesignSystem.Spacing.screenHorizontalMargin">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_search"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:maxLines="1"/>
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/btn_search"
-        style="@style/Button.Base"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="@dimen/marginItemsInSectionSmall"
-        android:background="@drawable/login_button_rounded"
-        android:text="@string/search" />
-
-    <TextView
-        android:id="@+id/tv_title_search_results"
-        style="@style/TextView.Search.Results"
-        android:visibility="gone"/>
-
-    <CheckBox
-        android:id="@+id/cb_exact_match"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/exact_match"/>
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/marginItemsInSectionSmall"
+        android:text="@string/search"
+        android:layout_marginHorizontal="@dimen/Mifos.DesignSystem.Spacing.screenHorizontalMargin"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_marginHorizontal="@dimen/Mifos.DesignSystem.Spacing.screenHorizontalMargin">
+
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            style="@style/Mifos.DesignSystem.TextStyle.BodyLarger"
+            android:text="@string/search_results"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+        <CheckBox
+            android:id="@+id/cb_exact_match"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/exact_match" />
+
+    </LinearLayout>
+
+
 
     <TextView
         android:id="@+id/tv_voucher_redemption"
@@ -110,57 +108,48 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentTop="true"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:paddingHorizontal="@dimen/Mifos.DesignSystem.Spacing.screenHorizontalMargin"/>
 
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_client"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="260dp"
             android:layout_gravity="bottom|end"
-            android:layout_marginRight="@dimen/fab_margin"
+            android:layout_marginEnd="@dimen/Mifos.DesignSystem.Spacing.FabMargin"
+            android:layout_marginBottom="260dp"
             android:visibility="invisible"
-            app:elevation="6dp"
-            app:pressedTranslationZ="12dp"
-            android:tint ="@color/white"
             app:srcCompat="@drawable/ic_person_black_24dp"
-            android:layout_marginEnd="@dimen/fab_margin" />
+            android:contentDescription="@string/create_client" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="180dp"
             android:layout_gravity="bottom|end"
-            android:layout_marginRight="@dimen/fab_margin"
+            android:layout_marginEnd="@dimen/Mifos.DesignSystem.Spacing.FabMargin"
+            android:layout_marginBottom="180dp"
             android:visibility="invisible"
-            app:elevation="6dp"
-            app:pressedTranslationZ="12dp"
-            android:tint ="@color/white"
             app:srcCompat="@drawable/ic_centers_24dp"
-            android:layout_marginEnd="@dimen/fab_margin" />
+            android:contentDescription="@string/create_center" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="100dp"
             android:layout_gravity="bottom|end"
-            android:layout_marginRight="@dimen/fab_margin"
+            android:layout_marginEnd="@dimen/Mifos.DesignSystem.Spacing.FabMargin"
+            android:layout_marginBottom="100dp"
             android:visibility="invisible"
-            app:elevation="6dp"
-            app:pressedTranslationZ="12dp"
-            android:tint ="@color/white"
-            app:srcCompat="@drawable/ic_group_black_24dp" />
+            app:srcCompat="@drawable/ic_group_black_24dp"
+            android:contentDescription="@string/create_group" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_create"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
-            app:elevation="6dp"
-            app:pressedTranslationZ="12dp"
             android:layout_margin="@dimen/fab_margin"
             app:srcCompat="@drawable/ic_add_white_24dp" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
